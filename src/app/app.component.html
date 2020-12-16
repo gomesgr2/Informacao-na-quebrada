@@ -1,0 +1,229 @@
+<link rel="icon" type="image/x-icon" href="+1code.jpg" />
+<p>
+  <mat-toolbar color="white">
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Informação na quebrada !</span>
+    <span class="example-spacer"></span>
+    <button
+      mat-icon-button
+      class="example-icon favorite-icon"
+      aria-label="Example icon-button with heart icon"
+    >
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with share icon"
+    >
+      <mat-icon>share</mat-icon>
+    </button>
+    <button mat-raised-button (click)="SugestionPodcast()">
+      Sugestão de sites e podcasts da quebrada
+    </button>
+  </mat-toolbar>
+</p>
+
+<mat-tab-group
+  mat-align-tabs="start"
+  style="padding-top: 40pix; padding-left: 2%; padding-right: 2%"
+>
+  <mat-tab label="Podcasts">
+    <select [(ngModel)]="episode.data_lancamento" class="div-select">
+      <option value="1">24 horas</option>
+      <option value="7">1 semana</option>
+      <option value="15">15 dias</option>
+      <option value="30">1 mês</option>
+      <option value="60">2 meses</option>
+      <option value="90">3 meses</option>
+      <option value="180">6 meses</option>
+      <option value="365">1 ano</option>
+      <option value="10000">Sem preferência por data</option>
+    </select>
+
+    <select [(ngModel)]="episode.duracao" class="div-select">
+      <option value="3">3 minutos</option>
+      <option value="5">5 minutos</option>
+      <option value="10">10 minutos</option>
+      <option value="15">15 minutos</option>
+      <option value="30">30 minutos</option>
+      <option value="60">1 hora</option>
+      <option value="120">2 horas</option>
+      <option value="240">3 horas</option>
+      <option value="10000">Sem preferência por duração</option>
+    </select>
+    <select [(ngModel)]="episode.autor" class="div-select">
+      <mat-label>Escolha o podcast</mat-label>
+      <option value="Todos">Todos</option>
+      <option value="Manda Notícias">Manda Notícias</option>
+      <option value="QuebraDev">QuebraDev</option>
+      <option value="Periferia em Movimento">Periferia em Movimento</option>
+      <option value="Papo Preto">Papo Preto</option>
+      <option value="Portal das águas .com">Portal das águas .com</option>
+      <option value="LUGAR DE QUARENTENA ">LUGAR DE QUARENTENA</option>
+      <option value="O Corre">O Corre</option>
+      <option value="Em Quarentena">Em Quarentena</option>
+      <option value="Papo de Quebrada">Papo de Quebrada</option>
+    </select>
+
+    <button mat-raised-button (click)="postPodcast()">Filtre</button>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" style="padding: 2%">
+      <!-- <div fxFlex="100" style="margin-left: 0.5%; font-weight: bold;">PRÓXIMAS</div> -->
+
+      <mat-card class="mat-card-podcasts">
+        <mat-card-title class="mat-card-title">
+          <div class="row">
+            <p>
+              <span
+                style="font-size: 1.3rem"
+                fxFlex="70"
+                fxLayoutAlign="start center"
+                >{{ autor.nome }}</span
+              >
+              <span fxFlex></span>
+            </p>
+            <p>
+              <span
+                style="font-size: 1rem"
+                fxFlex="25"
+                fxLayoutAlign="start center"
+              >
+               Feito por {{ autor.autor }}</span
+              >
+            </p>
+            <p>
+              <span
+                style="font-size: 1rem"
+                fxFlex="25"
+                fxLayoutAlign="start center"
+              >
+                Total de podcasts lançados :{{ autor.total_ep }}</span
+              >
+            </p>
+            <p style="text-align: justify; line-height: 20px">
+              <span
+                style="
+                  font-size: 1.15rem;
+                  font-family: Arial, Verdana, Tahoma, Sans-Serif;
+                  color: #333333;
+                "
+                >Descrição : {{ autor.descricao }}</span
+              >
+            </p>
+            <p>
+              <iframe
+                  [src]="autor.imagem"
+                  width="100%"
+                  height="65"
+                  frameborder="0"
+                ></iframe>
+            </p>
+          </div>
+        </mat-card-title>
+      </mat-card>
+
+      <ng-container *ngFor="let epi of json_podcast" style="margin: 0.5%">
+        <mat-card class="mat-card-podcasts">
+          <mat-card-title class="mat-card-title">
+            <div class="row">
+              <p>
+                <span
+                  style="font-size: 1.3rem"
+                  fxFlex="70"
+                  fxLayoutAlign="start center"
+                  >{{ epi.name }}</span
+                >
+                <span fxFlex></span>
+              </p>
+              <p>
+                <span
+                  style="font-size: 1rem"
+                  fxFlex="25"
+                  fxLayoutAlign="start center"
+                  >Lançado {{ epi.data_lancamento }}</span
+                >
+              </p>
+              <p style="text-align: justify; line-height: 20px">
+                <span
+                  style="
+                    font-size: 1.15rem;
+                    font-family: Arial, Verdana, Tahoma, Sans-Serif;
+                    color: #333333;
+                  "
+                  >Descrição : {{ epi.descricao }}</span
+                >
+              </p>
+              <p>
+                <span style="font-size: 1rem">Autores : {{ epi.autores }}</span>
+                <iframe
+                  [src]="epi.image"
+                  width="100%"
+                  height="65"
+                  frameborder="0"
+                ></iframe>
+              </p>
+            </div>
+          </mat-card-title>
+
+          <mat-card-image>
+            <div>
+              <iframe
+                [src]="epi.urlSafe"
+                width="100%"
+                height="232"
+                frameborder="0"
+                allowtransparency="true"
+                allow="encrypted-media"
+              ></iframe>
+            </div>
+          </mat-card-image>
+          <!-- <mat-card-actions style="margin:1px;padding-bottom:5px; padding-top: 5px;">
+                </mat-card-actions> -->
+        </mat-card>
+      </ng-container>
+    </div>
+  </mat-tab>
+  <mat-tab label="Sites">
+    <div style="padding: 2%">
+      <!-- <div fxFlex="100" style="margin-left: 0.5%; font-weight: bold;">PRÓXIMAS</div> -->
+      <ng-container *ngFor="let element of json_sites" style="margin: 0.5%">
+        <mat-card>
+          <mat-card-title class="mat-card-title">
+            <div>
+              <p>
+                <span>Site : Desenrola e não me enrola</span>
+                <span fxFlex></span>
+              </p>
+              <p>
+                <span
+                  style="font-size: 1rem"
+                  fxFlex="25"
+                  fxLayoutAlign="start center"
+                  >Autor : {{ element.autor }}</span
+                >
+              </p>
+            </div>
+          </mat-card-title>
+
+          <mat-card-content>
+            <div>
+              <iframe
+                [src]="element.urlSafe"
+                width="100%"
+                height="500"
+              ></iframe>
+            </div>
+          </mat-card-content>
+          <!-- <mat-card-actions style="margin:1px;padding-bottom:5px; padding-top: 5px;">
+                </mat-card-actions> -->
+        </mat-card>
+      </ng-container>
+    </div>
+  </mat-tab>
+</mat-tab-group>
